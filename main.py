@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import cv2
 from tracker import *
 
@@ -9,9 +11,14 @@ cap = cv2.VideoCapture("highway.mp4")
 # Object detection from Stable camera
 object_detector = cv2.createBackgroundSubtractorMOG2(history=100, varThreshold=40)
 
+start_date = datetime.now()
+
 while True:
     ret, frame = cap.read()
-    height, width, _ = frame.shape
+    try:
+        height, width, _ = frame.shape
+    except:
+        break
 
     # Extract Region of interest
     roi = frame[340: 720,500: 800]
@@ -48,3 +55,5 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
+
+print(f"Time spent: {datetime.now() - start_date}")
