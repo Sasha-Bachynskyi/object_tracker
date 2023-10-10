@@ -12,8 +12,14 @@ cap = cv2.VideoCapture("720p.mp4")
 object_detector = cv2.createBackgroundSubtractorMOG2(history=100, varThreshold=40)
 
 start_date = datetime.now()
+count = 0
+result = []
 
 while True:
+    if count >= 30:
+        result.append(datetime.now() - start_date)
+        count = 0
+        start_date = datetime.now()
     ret, frame = cap.read()
     try:
         height, width, _ = frame.shape
@@ -21,7 +27,7 @@ while True:
         break
 
     # Extract Region of interest
-    roi = frame[340: 720,500: 800]
+    roi = frame[340: 720, 500: 800]
 
     # 1. Object Detection
     mask = object_detector.apply(roi)
@@ -53,7 +59,10 @@ while True:
     if key == 27:
         break
 
+    count += 1
+
 cap.release()
 # cv2.destroyAllWindows()
 
-print(f"Time spent: {datetime.now() - start_date}")
+# print(f"Time spent: {datetime.now() - start_date}")
+print(result)
