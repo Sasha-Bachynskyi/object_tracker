@@ -6,7 +6,7 @@ from tracker import *
 # Create tracker object
 tracker = EuclideanDistTracker()
 
-cap = cv2.VideoCapture("highway.mp4")
+cap = cv2.VideoCapture("720p.mp4")
 
 # Object detection from Stable camera
 object_detector = cv2.createBackgroundSubtractorMOG2(history=100, varThreshold=40)
@@ -45,15 +45,15 @@ while True:
         cv2.putText(roi, str(id), (x, y - 15), cv2.FONT_HERSHEY_PLAIN, 2, (255, 0, 0), 2)
         cv2.rectangle(roi, (x, y), (x + w, y + h), (0, 255, 0), 3)
 
-    cv2.imshow("roi", roi)
-    cv2.imshow("Frame", frame)
-    cv2.imshow("Mask", mask)
+    # cv2.imshow("roi", roi)
+    # cv2.imshow("Frame", frame)
+    # cv2.imshow("Mask", mask)
 
     key = cv2.waitKey(30)
     if key == 27:
         break
 
 cap.release()
-cv2.destroyAllWindows()
+# cv2.destroyAllWindows()
 
 print(f"Time spent: {datetime.now() - start_date}")
