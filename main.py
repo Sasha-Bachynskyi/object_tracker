@@ -6,20 +6,14 @@ from tracker import *
 # Create tracker object
 tracker = EuclideanDistTracker()
 
-cap = cv2.VideoCapture("720p.mp4")
+cap = cv2.VideoCapture("1080p.mp4")
 
 # Object detection from Stable camera
 object_detector = cv2.createBackgroundSubtractorMOG2(history=100, varThreshold=40)
 
 start_date = datetime.now()
-count = 0
-result = []
 
 while True:
-    if count >= 30:
-        result.append(datetime.now() - start_date)
-        count = 0
-        start_date = datetime.now()
     ret, frame = cap.read()
     try:
         height, width, _ = frame.shape
@@ -59,10 +53,8 @@ while True:
     if key == 27:
         break
 
-    count += 1
 
 cap.release()
 # cv2.destroyAllWindows()
 
-# print(f"Time spent: {datetime.now() - start_date}")
-print(result)
+print(f"Time spent: {datetime.now() - start_date}")
